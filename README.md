@@ -20,9 +20,11 @@ b = tree.read(<some git buffer>)
 
 read a tree from some git buffer data.
 
-#### tree.create(author, tree, message, parent[, treeter][, attrs]) -> Tree
+#### tree.create(members) -> Tree
 
 create a tree from some source data.
+
+members should be a list of `{id: sha, mode: file mode number, name: string}` objects.
 
 all fields (save for message) may be arrays.
 
