@@ -1,0 +1,21 @@
+{
+  "name": "git-object-tree",
+  "version": "0.0.0",
+  "description": "parse and create git tree objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisdickinson/git-object-tree.git"
+  },
+  "keywords": [
+    "git",
+    "tree",
+    "object"
+  ],
+  "author": "Chris Dickinson <chris@neversaw.us>",
+  "license": "MIT",
+  "gitHead": "51873b555c78d4eeb4750e6dcf9e2bc33dadeb2e"
+}
