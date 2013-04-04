@@ -25,7 +25,7 @@ proto.serialize = function() {
     , buf
 
   for(var i = 0, len = this._members.length; i < len; ++i) {
-    buf = new Buffer(pad(this._members[i].mode.toString(8))+' ', 'utf8')
+    buf = new Buffer(this._members[i].mode.toString(8)+' ', 'utf8')
     size += buf.length
     buffers.push(buf)
     buf = new Buffer(this._members[i].name + '\0', 'utf8')
