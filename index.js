@@ -1,5 +1,7 @@
 module.exports = {read: read, create: create}
 
+var binary = require('bops')
+
 function Tree(members, raw) {
   this._members = members
   this._raw = raw
@@ -25,15 +27,15 @@ proto.serialize = function() {
     , buf
 
   for(var i = 0, len = this._members.length; i < len; ++i) {
-    buf = new Buffer(this._members[i].mode.toString(8)+' ', 'utf8')
+    buf = binary.from(this._members[i].mode.toString(8)+' ', 'utf8')
     size += buf.length
     buffers.push(buf)
-    buf = new Buffer(this._members[i].name + '\0', 'utf8')
+    buf = binary.from(this._members[i].name + '\0', 'utf8')
     size += buf.length
     buffers.push(buf)
 
     if(typeof this._members[i].hash === 'string') {
-      buf = new Buffer(this._members[i].hash, 'hex')
+      buf = binary.from(this._members[i].hash, 'hex')
     } else {
       buf = this._members[i].hash
     }
@@ -41,7 +43,7 @@ proto.serialize = function() {
     buffers.push(buf)
   }
 
-  return Buffer.concat(buffers, size)
+  return binary.join(buffers)
 }
 
 var STATE_MODE = 0
@@ -59,7 +61,7 @@ function read(buf) {
     , _byte
 
   while(idx < len) {
-    _byte = buf.readUInt8(idx++)
+    _byte = buf[idx++]
     switch(state) {
       case STATE_MODE: mode(); break
       case STATE_NAME: name(); break
@@ -91,9 +93,9 @@ function read(buf) {
     }
 
     members.push({
-        mode: parseInt(buf.slice(start, end_mode - 1).toString('utf8'), 8)
-      , name: buf.slice(end_mode, end_name - 1).toString('utf8')
-      , hash: buf.slice(end_name, idx)
+        mode: parseInt(binary.to(binary.subarray(buf, start, end_mode - 1), 'utf8'), 8)
+      , name: binary.to(binary.subarray(buf, end_mode, end_name - 1), 'utf8')
+      , hash: binary.subarray(buf, end_name, idx)
     })
 
     start = idx
