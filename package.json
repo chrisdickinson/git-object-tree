@@ -19,6 +19,6 @@
   "license": "MIT",
   "gitHead": "51873b555c78d4eeb4750e6dcf9e2bc33dadeb2e",
   "dependencies": {
-    "bops": "0.0.2"
+    "bops": "0.0.3"
   }
 }
